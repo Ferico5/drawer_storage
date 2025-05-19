@@ -1,8 +1,20 @@
 const DrawerModel = require('../models/DrawerModel.js');
+const drawerList = require('../helpers/DrawerList.js');
 
 const insertItem = async (req, res) => {
   try {
     const { nomor_laci, nama_barang } = req.body;
+
+    // Cek apakah nomor_laci valid
+    if (!drawerList.includes(nomor_laci)) {
+      return res.status(400).json({ msg: 'Nomor laci tidak valid!' });
+    }
+
+    // Cek apakah laci sudah digunakan
+    const existing = await DrawerModel.findOne({ nomor_laci });
+    if (existing) {
+      return res.status(400).json({ msg: 'Nomor laci ini sudah terisi!' });
+    }
 
     const newItem = new DrawerModel({ nomor_laci, nama_barang });
     await newItem.save();
