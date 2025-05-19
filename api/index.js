@@ -5,6 +5,7 @@ require('dotenv').config();
 
 // import route
 const userRoutes = require('./routes/UserRoute.js');
+const drawerRoutes = require('./routes/DrawerRoute.js');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -22,6 +23,7 @@ mongoose
 app.use(express.json());
 app.use(cors());
 app.use(userRoutes);
+app.use(drawerRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server started at port ${PORT}`);
