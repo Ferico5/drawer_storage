@@ -26,6 +26,26 @@ const insertItem = async (req, res) => {
   }
 };
 
+const getItem = async (req, res) => {
+  try {
+    const items = await DrawerModel.find();
+    const itemMap = {};
+    items.forEach((item) => {
+      itemMap[item.nomor_laci] = item.nama_barang;
+    });
+
+    const fullList = drawerList.map((laci) => ({
+      nomor_laci: laci,
+      nama_barang: itemMap[laci] || null,
+    }));
+
+    return res.status(200).json(fullList);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+};
+
 const searchItem = async (req, res) => {
   const keyword = req.query.q;
 
@@ -41,4 +61,21 @@ const searchItem = async (req, res) => {
   }
 };
 
-module.exports = { insertItem, searchItem };
+const updateItem = async (req, res) => {
+  try {
+    const { nama_barang } = req.body;
+
+    const updateItem = await DrawerModel.findByIdAndUpdate(req.params.id, { nama_barang }, { new: true });
+
+    if (!updateItem) {
+      return res.status(404).json({ msg: 'Laci tidak ditemukan' });
+    }
+
+    res.status(200).json({ msg: 'Item berhasil diubah!', item: updateItem });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: 'Server error' });
+  }
+};
+
+module.exports = { insertItem, getItem, searchItem, updateItem };
