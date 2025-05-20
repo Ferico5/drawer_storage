@@ -5,7 +5,7 @@ const Drawer = ({ kode_laci, nama_barang }) => {
       <h1 className="text-white text-sm font-semibold">{kode_laci}</h1>
 
       <div className="w-[10em] h-[8em] bg-white flex items-center justify-center">
-        <span className={`text-sm ${nama_barang === 'Kosong' ? 'bg-red-500 text-white font-bold p-3' : 'text-black text-lg'}`}>
+        <span className={`text-sm ${nama_barang === 'Kosong' ? 'bg-red-500 text-white font-bold p-3' : 'text-black text-xl'}`}>
           {nama_barang}
         </span>
       </div>

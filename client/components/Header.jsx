@@ -22,6 +22,17 @@ const Header = () => {
           </ul>
         </nav>
       </div>
+
+      <div className="flex items-center">
+        {/* Nama User */}
+        {/* {token && user && <p className="font-medium mr-10">{user?.full_name}</p>}
+        {token && user && (
+          <button onClick={() => logout(navigate)} className="bg-red-500 px-3 py-1 rounded-md hover:bg-red-600 hover:cursor-pointer">
+            Logout
+          </button>
+        )} */}
+        <p>Nama</p>
+      </div>
     </div>
   );
 };
