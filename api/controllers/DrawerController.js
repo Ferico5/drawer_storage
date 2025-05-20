@@ -5,19 +5,23 @@ const insertItem = async (req, res) => {
   try {
     const { nomor_laci, nama_barang } = req.body;
 
-    // Cek apakah nomor_laci valid
     if (!drawerList.includes(nomor_laci)) {
       return res.status(400).json({ msg: 'Nomor laci tidak valid!' });
     }
 
-    // Cek apakah laci sudah digunakan
     const existing = await DrawerModel.findOne({ nomor_laci });
-    if (existing) {
+
+    if (existing && existing.nama_barang && existing.nama_barang !== 'Kosong') {
       return res.status(400).json({ msg: 'Nomor laci ini sudah terisi!' });
     }
 
-    const newItem = new DrawerModel({ nomor_laci, nama_barang });
-    await newItem.save();
+    if (!existing) {
+      const newItem = new DrawerModel({ nomor_laci, nama_barang });
+      await newItem.save();
+    } else {
+      existing.nama_barang = nama_barang;
+      await existing.save();
+    }
 
     res.status(200).json({ msg: 'Barang berhasil dimasukkan!' });
   } catch (error) {
@@ -64,8 +68,9 @@ const searchItem = async (req, res) => {
 const updateItem = async (req, res) => {
   try {
     const { nama_barang } = req.body;
+    const { id } = req.params;
 
-    const updateItem = await DrawerModel.findByIdAndUpdate(req.params.id, { nama_barang }, { new: true });
+    const updateItem = await DrawerModel.findOneAndUpdate({ nomor_laci: id }, { nama_barang: nama_barang ?? 'Kosong' }, { new: true });
 
     if (!updateItem) {
       return res.status(404).json({ msg: 'Laci tidak ditemukan' });
