@@ -5,9 +5,10 @@ import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-rou
 // import pages
 // import Auth from '../pages/Auth';
 import Dashboard from '../pages/Dashboard';
+import InsertItem from '../pages/InsertItem';
 
 // import components
-// import Header from '../components/Header';
+import Header from '../components/Header';
 
 // // Import context
 // import { AuthProvider } from '../auth/AuthContext';
@@ -16,7 +17,7 @@ import Dashboard from '../pages/Dashboard';
 const Layout = () => {
   return (
     <>
-      {/* <Header /> */}
+      <Header />
       <Outlet />
     </>
   );
@@ -40,6 +41,14 @@ const router = createBrowserRouter([
         element: (
           // <ProtectedRoute>
             <Dashboard />
+          // </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/insert-item',
+        element: (
+          // <ProtectedRoute>
+            <InsertItem />
           // </ProtectedRoute>
         ),
       },

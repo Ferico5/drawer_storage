@@ -104,8 +104,8 @@ const Dashboard = () => {
   return (
     <div>
       {/* Kolom Pencarian */}
-      <div className="mb-6">
-        <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-1">
+      <div className="mt-4 mb-6 flex justify-center">
+        <label htmlFor="search" className="block font-medium text-gray-700 my-1 mx-2 text-lg">
           Cari barang:
         </label>
         <input
