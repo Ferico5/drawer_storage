@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-rou
 import Auth from '../pages/Auth';
 import Dashboard from '../pages/Dashboard';
 import InsertItem from '../pages/InsertItem';
+import PageNotFound from '../pages/PageNotFound';
 
 // import components
 import Header from '../components/Header';
@@ -51,18 +52,10 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      // {
-      //   path: '/server-error',
-      //   element: (
-      //     <ProtectedRoute>
-      //       <ServerError />
-      //     </ProtectedRoute>
-      //   ),
-      // },
-      // {
-      //   path: '*',
-      //   element: <PageNotFound />,
-      // },
+      {
+        path: '*',
+        element: <PageNotFound />,
+      },
     ],
   },
 ]);
