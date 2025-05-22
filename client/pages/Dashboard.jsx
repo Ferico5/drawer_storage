@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Drawer from '../components/Drawer';
 
 // Fungsi bantu buat filter dan sorting laci per rak
@@ -45,12 +46,10 @@ const Dashboard = () => {
   const fetchItems = async (query = '') => {
     setLoading(true);
     try {
-      const url = query
-        ? `http://localhost:8000/search-item?q=${encodeURIComponent(query)}`
-        : 'http://localhost:8000/get-item';
+      const url = query ? `http://localhost:8000/search-item?q=${encodeURIComponent(query)}` : 'http://localhost:8000/get-item';
 
-      const res = await fetch(url);
-      const data = await res.json();
+      const res = await axios.get(url);
+      const data = res.data;
 
       if (query) {
         const searchMap = {};
@@ -74,14 +73,14 @@ const Dashboard = () => {
 
         setDrawers(fullList);
 
-        const racksWithData = [...new Set(fullList.map(item => item.nomor_laci.split('-')[0]))];
+        const racksWithData = [...new Set(fullList.map((item) => item.nomor_laci.split('-')[0]))];
         setDisplayedRacks(racksWithData);
       } else {
         setDrawers(data);
         setDisplayedRacks(rackOrder);
       }
     } catch (error) {
-      console.error('Terjadi kesalahan saat fetch data:', error);
+      console.error('Terjadi kesalahan saat mengambil data:', error);
       setDrawers([]);
       setDisplayedRacks([]);
     }
@@ -122,21 +121,12 @@ const Dashboard = () => {
 
       {/* Table */}
       <div className="flex flex-col gap-4 p-4">
-        {displayedRacks.length === 0 && !loading && (
-          <p className="text-center text-gray-500 italic">Tidak ada data untuk ditampilkan.</p>
-        )}
+        {displayedRacks.length === 0 && !loading && <p className="text-center text-gray-500 italic">Tidak ada data untuk ditampilkan.</p>}
 
         {displayedRacks.map((rack) => (
           <div key={rack} className="flex overflow-x-auto gap-2">
             {racks[rack]?.length > 0 ? (
-              racks[rack].map(({ nomor_laci, nama_barang }) => (
-                <Drawer
-                  key={nomor_laci}
-                  kode_laci={nomor_laci}
-                  nama_barang={nama_barang || 'Kosong'}
-                  isEmpty={!nama_barang}
-                />
-              ))
+              racks[rack].map(({ nomor_laci, nama_barang }) => <Drawer key={nomor_laci} kode_laci={nomor_laci} nama_barang={nama_barang || 'Kosong'} isEmpty={!nama_barang} />)
             ) : (
               <p className="text-gray-500 italic">Rak kosong</p>
             )}

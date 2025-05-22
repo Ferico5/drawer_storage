@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const InsertItem = () => {
@@ -19,10 +20,9 @@ const InsertItem = () => {
 
   const fetchDrawerList = async () => {
     try {
-      const res = await fetch('http://localhost:8000/get-item');
-      const data = await res.json();
-      setDrawerList(data);
-      setFilteredDrawer(data);
+      const res = await axios.get('http://localhost:8000/get-item');
+      setDrawerList(res.data);
+      setFilteredDrawer(res.data);
     } catch (err) {
       console.error('Gagal mengambil data laci:', err);
     }
@@ -80,25 +80,17 @@ const InsertItem = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:8000/insert-item', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nomor_laci: drawerNumber, nama_barang: itemName }),
+      await axios.post('http://localhost:8000/insert-item', {
+        nomor_laci: drawerNumber,
+        nama_barang: itemName,
       });
 
-      const result = await res.json();
-
-      if (!res.ok) {
-        setMessage(result.msg || 'Gagal menambahkan barang.');
-        setStatus('error');
-      } else {
-        setMessage(result.msg || 'Barang berhasil ditambahkan!');
-        setStatus('success');
-        setDrawerNumber('');
-        setItemName('');
-        fetchDrawerList();
-        navigate('/dashboard');
-      }
+      setMessage('Barang berhasil ditambahkan!');
+      setStatus('success');
+      setDrawerNumber('');
+      setItemName('');
+      fetchDrawerList();
+      navigate('/dashboard');
     } catch (err) {
       console.error(err);
       setMessage('Terjadi kesalahan saat koneksi ke server.');
