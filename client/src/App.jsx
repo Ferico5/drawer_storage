@@ -1,18 +1,17 @@
 // eslint-disable-next-line no-unused-vars
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
-// import ProtectedRoute from '../components/ProtectedRoute';
 
 // import pages
-// import Auth from '../pages/Auth';
+import Auth from '../pages/Auth';
 import Dashboard from '../pages/Dashboard';
 import InsertItem from '../pages/InsertItem';
 
 // import components
 import Header from '../components/Header';
+import ProtectedRoute from '../components/ProtectedRoute';
 
-// // Import context
-// import { AuthProvider } from '../auth/AuthContext';
-// import ReservedBook from '../pages/ReservedBook';
+// Import context
+import { AuthProvider } from '../auth/AuthContext';
 
 const Layout = () => {
   return (
@@ -28,28 +27,28 @@ const router = createBrowserRouter([
     path: '/',
     element: <Layout />,
     children: [
-      // {
-      //   path: '/',
-      //   element: <Navigate to="/dashboard" replace />,
-      // },
-      // {
-      //   path: '/auth',
-      //   element: <Auth />,
-      // },
+      {
+        path: '/',
+        element: <Navigate to="/dashboard" replace />,
+      },
+      {
+        path: '/auth',
+        element: <Auth />,
+      },
       {
         path: '/dashboard',
         element: (
-          // <ProtectedRoute>
+          <ProtectedRoute>
             <Dashboard />
-          // </ProtectedRoute>
+          </ProtectedRoute>
         ),
       },
       {
         path: '/insert-item',
         element: (
-          // <ProtectedRoute>
+          <ProtectedRoute>
             <InsertItem />
-          // </ProtectedRoute>
+          </ProtectedRoute>
         ),
       },
       // {
@@ -71,9 +70,9 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <div>
-      {/* <AuthProvider> */}
+      <AuthProvider>
         <RouterProvider router={router} />
-      {/* </AuthProvider> */}
+      </AuthProvider>
     </div>
   );
 };
