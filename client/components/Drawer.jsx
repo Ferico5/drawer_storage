@@ -97,18 +97,14 @@ const Drawer = ({ kode_laci, nama_barang }) => {
       <h1 className="text-white text-sm font-semibold">{kode_laci}</h1>
 
       <div className="w-[10em] h-[8em] bg-white flex items-center justify-center">
-        <span className={`text-sm ${nama_barang === 'Kosong' ? 'bg-red-500 text-white font-bold p-3' : 'text-black text-xl'}`}>
-          {nama_barang}
-        </span>
+        <span className={`text-sm ${nama_barang === 'Kosong' ? 'bg-red-500 text-white font-bold p-3' : 'text-black text-xl'}`}>{nama_barang}</span>
       </div>
 
       {/* button */}
       <div className="flex gap-2 mt-2">
         <button
           onClick={() => setShowModal(true)}
-          className={`text-xs text-white px-2 py-1 rounded hover:brightness-90 ${
-            nama_barang === null || nama_barang === 'Kosong' ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'
-          }`}
+          className={`text-xs text-white px-2 py-1 rounded hover:brightness-90 ${nama_barang === null || nama_barang === 'Kosong' ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600'}`}
         >
           {nama_barang === null || nama_barang === 'Kosong' ? '➕ Tambah' : '✏️ Ubah'}
         </button>
@@ -121,16 +117,8 @@ const Drawer = ({ kode_laci, nama_barang }) => {
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-md w-[300px]">
-            <h2 className="text-lg font-semibold mb-4">
-              {nama_barang === null || nama_barang === 'Kosong' ? 'Tambah Nama Barang' : 'Update Nama Barang'}
-            </h2>
-            <input
-              type="text"
-              value={newItemName}
-              onChange={(e) => setNewItemName(e.target.value)}
-              className="w-full p-2 border rounded mb-4"
-              placeholder="Masukkan nama barang"
-            />
+            <h2 className="text-lg font-semibold mb-4">{nama_barang === null || nama_barang === 'Kosong' ? 'Tambah Nama Barang' : 'Update Nama Barang'}</h2>
+            <input type="text" value={newItemName} onChange={(e) => setNewItemName(e.target.value)} className="w-full p-2 border rounded mb-4" placeholder="Masukkan nama barang" />
             <div className="flex justify-end gap-2">
               <button onClick={() => setShowModal(false)} className="px-3 py-1 bg-gray-300 rounded">
                 Batal

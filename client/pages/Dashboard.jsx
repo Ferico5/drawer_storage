@@ -101,10 +101,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
+    <div className="px-4 sm:px-6 lg:px-8">
       {/* Kolom Pencarian */}
-      <div className="mt-4 mb-6 flex justify-center">
-        <label htmlFor="search" className="block font-medium text-gray-700 my-1 mx-2 text-lg">
+      <div className="mt-4 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2 sm:gap-4">
+        <label htmlFor="search" className="block font-medium text-gray-700 text-base sm:text-lg">
           Cari barang:
         </label>
         <input
@@ -113,18 +113,18 @@ const Dashboard = () => {
           value={search}
           onChange={handleSearchChange}
           placeholder="Ketik nama barang minimal 2 huruf..."
-          className="w-full max-w-md p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
+          className="w-full sm:w-96 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500"
         />
       </div>
 
-      {loading && <p className="text-sm text-gray-500 mb-4">Memuat data...</p>}
+      {loading && <p className="text-sm text-gray-500 mb-4 text-center">Memuat data...</p>}
 
       {/* Table */}
-      <div className="flex flex-col gap-4 p-4">
+      <div className="flex flex-col gap-6">
         {displayedRacks.length === 0 && !loading && <p className="text-center text-gray-500 italic">Tidak ada data untuk ditampilkan.</p>}
 
         {displayedRacks.map((rack) => (
-          <div key={rack} className="flex overflow-x-auto gap-2">
+          <div key={rack} className="flex overflow-x-auto gap-2 p-2 sm:p-3 border-b border-gray-200">
             {racks[rack]?.length > 0 ? (
               racks[rack].map(({ nomor_laci, nama_barang }) => <Drawer key={nomor_laci} kode_laci={nomor_laci} nama_barang={nama_barang || 'Kosong'} isEmpty={!nama_barang} />)
             ) : (
